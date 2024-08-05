@@ -15,67 +15,69 @@
         h1 {
             color: #333;
         }
-        .container {
+        .search-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             gap: 20px;
-            justify-content: center;
-        }
-        .search-frame {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 10px;
-            width: 45%;
-            height: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
-        }
-        .search-frame h2 {
-            color: #555;
+            margin-bottom: 20px;
         }
         iframe {
             width: 100%;
-            height: calc(100% - 40px);
+            height: 500px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
             border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
         @media (max-width: 768px) {
-            .search-frame {
-                width: 100%;
+            iframe {
                 height: 400px;
+            }
+            input[type="text"] {
+                width: 100%;
             }
         }
         @media (max-width: 480px) {
-            .search-frame {
-                width: 100%;
+            iframe {
                 height: 300px;
             }
         }
     </style>
 </head>
 <body>
-    <h1>بحث جوجل المخصص في أربع إطارات</h1>
-    <div class="container">
-        <div class="search-frame">
-            <h2>بحث 1</h2>
-            <script async src="https://cse.google.com/cse.js?cx=94c0ca8a9651542d9"></script>
-            <div class="gcse-search" data-gname="frame1"></div>
-        </div>
-        <div class="search-frame">
-            <h2>بحث 2</h2>
-            <script async src="https://cse.google.com/cse.js?cx=94c0ca8a9651542d9"></script>
-            <div class="gcse-search" data-gname="frame2"></div>
-        </div>
-        <div class="search-frame">
-            <h2>بحث 3</h2>
-            <script async src="https://cse.google.com/cse.js?cx=94c0ca8a9651542d9"></script>
-            <div class="gcse-search" data-gname="frame3"></div>
-        </div>
-        <div class="search-frame">
-            <h2>بحث 4</h2>
-            <script async src="https://cse.google.com/cse.js?cx=94c0ca8a9651542d9"></script>
-            <div class="gcse-search" data-gname="frame4"></div>
-        </div>
+    <h1>بحث جوجل المخصص</h1>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="ابحث هنا...">
+        <button onclick="performSearch()">بحث</button>
     </div>
+    <iframe id="search-frame" src=""></iframe>
+
+    <script>
+        function performSearch() {
+            const query = document.getElementById('search-input').value;
+            const searchFrame = document.getElementById('search-frame');
+            const cx = '94c0ca8a9651542d9';
+            const url = `https://www.google.com/search?q=${encodeURIComponent(query)}&cx=${cx}`;
+            searchFrame.src = url;
+        }
+    </script>
 </body>
 </html>
