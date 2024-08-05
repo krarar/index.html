@@ -68,15 +68,18 @@
         <input type="text" id="search-input" placeholder="ابحث هنا...">
         <button onclick="performSearch()">بحث</button>
     </div>
-    <iframe id="search-frame" src=""></iframe>
+    <iframe id="search-frame" src="https://www.google.com/cse?cx=94c0ca8a9651542d9" frameborder="0"></iframe>
 
+    <script async src="https://cse.google.com/cse.js?cx=94c0ca8a9651542d9"></script>
     <script>
         function performSearch() {
             const query = document.getElementById('search-input').value;
             const searchFrame = document.getElementById('search-frame');
-            const cx = '94c0ca8a9651542d9';
-            const url = `https://www.google.com/search?q=${encodeURIComponent(query)}&cx=${cx}`;
-            searchFrame.src = url;
+            const encodedQuery = encodeURIComponent(query);
+            const searchURL = `https://www.google.com/cse?cx=94c0ca8a9651542d9&q=${encodedQuery}`;
+
+            // Update iframe source to show the search results
+            searchFrame.src = searchURL;
         }
     </script>
 </body>
