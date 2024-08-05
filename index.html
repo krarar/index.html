@@ -59,7 +59,17 @@
     <script>
         function loadUrl(frameId, inputId) {
             var url = document.getElementById(inputId).value;
-            document.getElementById(frameId).src = 'https://cors-anywhere.herokuapp.com/' + url;
+            fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
+                .then(response => {
+                    if (response.ok) return response.json();
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    document.getElementById(frameId).srcdoc = data.contents;
+                })
+                .catch(error => {
+                    console.error('Fetching error: ', error);
+                });
         }
     </script>
 </head>
@@ -67,22 +77,22 @@
     <div class="frame-container">
         <input type="text" id="url1" placeholder="أدخل الرابط هنا">
         <button onclick="loadUrl('frame1', 'url1')">فتح الرابط</button>
-        <iframe id="frame1" src="https://www.google.com/" title="إطار 1"></iframe>
+        <iframe id="frame1" title="إطار 1"></iframe>
     </div>
     <div class="frame-container">
         <input type="text" id="url2" placeholder="أدخل الرابط هنا">
         <button onclick="loadUrl('frame2', 'url2')">فتح الرابط</button>
-        <iframe id="frame2" src="https://www.google.com/" title="إطار 2"></iframe>
+        <iframe id="frame2" title="إطار 2"></iframe>
     </div>
     <div class="frame-container">
         <input type="text" id="url3" placeholder="أدخل الرابط هنا">
         <button onclick="loadUrl('frame3', 'url3')">فتح الرابط</button>
-        <iframe id="frame3" src="https://www.google.com/" title="إطار 3"></iframe>
+        <iframe id="frame3" title="إطار 3"></iframe>
     </div>
     <div class="frame-container">
         <input type="text" id="url4" placeholder="أدخل الرابط هنا">
         <button onclick="loadUrl('frame4', 'url4')">فتح الرابط</button>
-        <iframe id="frame4" src="https://www.google.com/" title="إطار 4"></iframe>
+        <iframe id="frame4" title="إطار 4"></iframe>
     </div>
 </body>
 </html>
