@@ -1,208 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Card App</title>
+    <title>صفحة بأربعة إطارات</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            margin: 20px;
-        }
-        h1 {
-            color: #3498db;
-        }
-        p {
-            color: #bdc3c7;
-            font-size: 18px;
-            margin: 20px 0;
-        }
-        #topButtons {
             display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .frame-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        iframe {
+            width: 100%;
+            height: 70vh;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
         }
         button {
-            background: none;
-            border: none;
-            padding: 15px 30px;
-            color: #27ae60; /* لون أخضر */
-            font-weight: bold;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
             cursor: pointer;
-            transition: color 0.3s;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         button:hover {
-            color: #219653; /* لون أخضر داكن عند التحويل */
+            background-color: #45a049;
         }
-        #searchContainer {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        #searchInput {
-            padding: 10px;
-            width: 300px;
-            border-radius: 8px;
-            margin-right: 10px;
-        }
-        #searchButton {
-            background: none;
-            border: none;
-            color: #27ae60; /* لون أخضر */
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        #searchButton:hover {
-            color: #219653; /* لون أخضر داكن عند التحويل */
-        }
-        #cardContainer {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .creditCard {
-            padding: 15px;
-            color: #fff;
-            text-align: left;
-            border-radius: 8px;
-            width: 300px;
-            transition: transform 0.3s;
-            cursor: pointer;
-            background-size: cover;
-            background-position: center;
-            background-image: url('/storage/emulated/0/Cards project /ard_background.jpg'); /* اسم الصورة الخاصة بك */
-        }
-        .creditCard:hover {
-            transform: translateY(-5px);
-        }
-        #footer {
-            margin-top: 50px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .socialIcon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #3498db;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-decoration: none;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        .socialIcon:hover {
-            background-color: #2980b9; /* لون أزرق داكن عند التحويل */
-        }
-        #generateCardButton {
-            background: none;
-            border: none;
-            color: #27ae60; /* لون أخضر */
-            padding: 15px 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        #generateCardButton:hover {
-            color: #219653; /* لون أخضر داكن عند التحويل */
+        @media (min-width: 600px) {
+            .frame-container {
+                width: 50%;
+            }
         }
     </style>
-</head>
-<body>
-    <div id="topButtons">
-        <button onclick="showCodePrompt()">Button 1</button>
-        <button>Button 2</button>
-        <button>Button 3</button>
-        <button>Button 4</button>
-        <button>Button 5</button>
-    </div>
-
-    <h1>Welcome to the Credit Card App</h1>
-    <p>Generate a virtual credit card or log in to access more features.</p>
-
-    <div id="searchContainer">
-        <input type="text" id="searchInput" placeholder="Search...">
-        <button id="searchButton" onclick="search()">Search</button>
-    </div>
-
-    <button id="generateCardButton" onclick="generateCard()">Generate Card</button>
-
-    <div id="cardContainer"></div>
-
-    <div id="footer">
-        <a class="socialIcon" href="#" onclick="addSocialIcon('facebook')">Facebook</a>
-        <a class="socialIcon" href="#" onclick="addSocialIcon('gmail')">Gmail</a>
-        <a class="socialIcon" href="#" onclick="addSocialIcon('instagram')">Instagram</a>
-        <a class="socialIcon" href="#" onclick="addSocialIcon('google-play')">Google Play</a>
-        <a class="socialIcon" href="#" onclick="addSocialIcon('app-store')">App Store</a>
-    </div>
-
     <script>
-        function showCodePrompt() {
-            const code = prompt('Please enter a code (1, 2, 3, or 4):');
-            alert(`You entered: ${code}`);
-        }
-
-        function search() {
-            const searchTerm = document.getElementById('searchInput').value;
-            alert(`Searching for: ${searchTerm}`);
-        }
-
-        function generateCard() {
-            const code = prompt('Please enter a code (1, 2, 3, or 4):');
-            const cardContainer = document.getElementById('cardContainer');
-            const card = document.createElement('div');
-            card.className = 'creditCard';
-            card.innerText = generateRandomCard();
-            cardContainer.innerHTML = '';
-            cardContainer.appendChild(card);
-
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-5px)';
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-
-            card.addEventListener('click', () => {
-                const dummy = document.createElement('textarea');
-                document.body.appendChild(dummy);
-                dummy.value = card.innerText;
-                dummy.select();
-                document.execCommand('copy');
-                document.body.removeChild(dummy);
-                alert('Card details copied to clipboard!');
-            });
-        }
-
-        function generateRandomCard() {
-            const cardName = "Card Holder: " + generateRandomName();
-            const cardNumber = "Card Number: " + Math.floor(Math.random() * 1000000000000000);
-            const expirationDate = "Expiration Date: " + Math.floor(Math.random() * 12 + 1) + "/" + (new Date().getFullYear() + Math.floor(Math.random() * 5));
-            const cvv = "CVV: " + Math.floor(Math.random() * 1000);
-            return `${cardName}\n${cardNumber}\n${expirationDate}\n${cvv}`;
-        }
-
-        function generateRandomName() {
-            const names = ["John Doe", "Jane Doe", "Alice Johnson", "Bob Smith", "Eva Brown"];
-            return names[Math.floor(Math.random() * names.length)];
-        }
-
-        function addSocialIcon(platform) {
-            alert(`Adding ${platform} icon to the footer!`);
+        function loadUrl(frameId, inputId) {
+            var url = document.getElementById(inputId).value;
+            document.getElementById(frameId).src = 'https://cors-anywhere.herokuapp.com/' + url;
         }
     </script>
+</head>
+<body>
+    <div class="frame-container">
+        <input type="text" id="url1" placeholder="أدخل الرابط هنا">
+        <button onclick="loadUrl('frame1', 'url1')">فتح الرابط</button>
+        <iframe id="frame1" src="https://www.google.com/" title="إطار 1"></iframe>
+    </div>
+    <div class="frame-container">
+        <input type="text" id="url2" placeholder="أدخل الرابط هنا">
+        <button onclick="loadUrl('frame2', 'url2')">فتح الرابط</button>
+        <iframe id="frame2" src="https://www.google.com/" title="إطار 2"></iframe>
+    </div>
+    <div class="frame-container">
+        <input type="text" id="url3" placeholder="أدخل الرابط هنا">
+        <button onclick="loadUrl('frame3', 'url3')">فتح الرابط</button>
+        <iframe id="frame3" src="https://www.google.com/" title="إطار 3"></iframe>
+    </div>
+    <div class="frame-container">
+        <input type="text" id="url4" placeholder="أدخل الرابط هنا">
+        <button onclick="loadUrl('frame4', 'url4')">فتح الرابط</button>
+        <iframe id="frame4" src="https://www.google.com/" title="إطار 4"></iframe>
+    </div>
 </body>
 </html>
